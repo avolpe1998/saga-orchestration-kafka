@@ -1,0 +1,32 @@
+# --- Global & OS ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+tmp_*.md
+
+# --- Secrets (VERY IMPORTANT) ---
+**/credentials.json
+**/*.key
+**/*.pem
+
+# --- Database ---
+*.sql.gz
+*.sqlite
+*.db
+
+# --- Java / Spring Boot ---
+**/target/
+**/.mvn/
+**/mvnw
+**/mvnw.cmd
+*.class
+*.jar
+
+# --- Python (Server-mock & Scripts) ---
+**/__pycache__/
+*.pyc
+.venv/
+venv/
+.env
