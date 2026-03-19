@@ -1,0 +1,5 @@
+# Run this command on terminal to add products within db
+
+DOCKER COMMAND
+
+docker exec saga-postgres psql -U postgres -d inventory_db -c "INSERT INTO products (name, available_quantity) VALUES ('MacBook Pro', 10);"
