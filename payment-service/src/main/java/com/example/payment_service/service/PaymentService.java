@@ -38,7 +38,7 @@ public class PaymentService {
         } catch (Exception e) {
             // If WireMock returns 400 Bad Request, an exception is thrown
             status = PaymentStatus.REJECTED;
-            log.warn("Payment failed for Order ID: {}", paymentRequestDTO.orderId());
+            log.warn("Payment failed for Order ID: {}", paymentRequestDTO.orderId(), e);
         }
 
         com.example.payment_service.entity.PaymentStatus dbStatus = mapToEntityStatus(status);

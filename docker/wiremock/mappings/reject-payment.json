@@ -1,0 +1,23 @@
+// docker/wiremock/mappings/reject-payment.json
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "urlPath": "/bank/charge",
+    "queryParameters": {
+      "amount": {
+        "matches": "^[1-9][0-9]{2,}(\\.[0-9]+)?$"
+      }
+    }
+  },
+  "response": {
+    "status": 400,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "error": "INSUFFICIENT_FUNDS",
+      "message": "The bank declined the transaction."
+    }
+  }
+}

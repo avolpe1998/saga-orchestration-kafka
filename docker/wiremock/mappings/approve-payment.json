@@ -1,0 +1,18 @@
+// docker/wiremock/mappings/approve-payment.json
+{
+  "priority": 5,
+  "request": {
+    "method": "GET",
+    "urlPath": "/bank/charge"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "status": "SUCCESS",
+      "transactionId": "txn_89347598345"
+    }
+  }
+}

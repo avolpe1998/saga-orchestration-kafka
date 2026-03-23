@@ -36,6 +36,8 @@ services:
   wiremock:
     image: wiremock/wiremock:latest
     container_name: saga-mock-bank
+    volumes:
+      - ./wiremock:/home/wiremock
     ports:
       - "8080:8080"
     command: ["--global-response-templating"]
