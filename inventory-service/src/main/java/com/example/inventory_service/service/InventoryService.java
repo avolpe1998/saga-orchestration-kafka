@@ -2,6 +2,7 @@ package com.example.inventory_service.service;
 
 import com.example.commons.dto.InventoryRequestDTO;
 import com.example.commons.dto.InventoryResponseDTO;
+import com.example.commons.dto.ReleaseStockDTO;
 import com.example.commons.dto.enums.InventoryStatus;
 import com.example.inventory_service.entity.Product;
 import com.example.inventory_service.repository.ProductRepository;
@@ -40,5 +41,16 @@ public class InventoryService {
 
         InventoryResponseDTO response = new InventoryResponseDTO(requestDTO.orderId(), status);
         kafkaTemplate.send("inventory-events", response);
+    }
+
+    @KafkaListener(topics = "inventory-rollbacks", groupId = "inventory-group")
+    @Transactional
+    public void rollbackInventory(ReleaseStockDTO releaseStockDTO) {
+        log.info("Compensating Transaction Started: Releasing {} items for Product ID {} (Order ID: {})",
+                releaseStockDTO.quantity(), releaseStockDTO.productId(), releaseStockDTO.orderId());
+
+        productRepository.releaseStock(releaseStockDTO.productId(), releaseStockDTO.quantity());
+
+        log.info("Compensating Transaction Completed: Stock restored for Order ID: {}", releaseStockDTO.orderId());
     }
 }

@@ -1,9 +1,6 @@
 package com.example.order_service.service;
 
-import com.example.commons.dto.InventoryRequestDTO;
-import com.example.commons.dto.InventoryResponseDTO;
-import com.example.commons.dto.PaymentRequestDTO;
-import com.example.commons.dto.PaymentResponseDTO;
+import com.example.commons.dto.*;
 import com.example.commons.dto.enums.InventoryStatus;
 import com.example.commons.dto.enums.PaymentStatus;
 import com.example.order_service.entity.Order;
@@ -76,11 +73,11 @@ public class SagaOrchestrator {
             log.warn("Saga Failed: Payment rejected for Order {}. Triggering Compensation.", order.getId());
             // Payment failed -> End Saga with Rejection
             orderStatus = OrderStatus.REJECTED;
-        }
 
-        // *COMPENSATING TRANSACTION NOTE:*
-        // In a fully flushed-out system, we would send a `ReleaseStockDTO` back to the
-        // `inventory-commands` topic right here so the inventory worker knows to put the items back!
+            // COMPENSATING TRANSACTION
+            ReleaseStockDTO releaseStockDTO = new ReleaseStockDTO(order.getId(), order.getProductId(), order.getQuantity());
+            kafkaTemplate.send("inventory-rollbacks", releaseStockDTO);
+        }
 
         order.setStatus(orderStatus);
         orderRepository.save(order);

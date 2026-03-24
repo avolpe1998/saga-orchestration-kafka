@@ -1,0 +1,3 @@
+CHECK PRODUCTS
+
+docker exec saga-postgres psql -U postgres -d inventory_db -c "SELECT * FROM products;"

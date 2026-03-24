@@ -1,7 +1,5 @@
-CALL
+PLACE ORDER
 
 curl -X POST http://localhost:8081/api/orders \
 -H "Content-Type: application/json" \
 -d '{"productId": 1, "quantity": 2, "price": 50.0}'
-
-
