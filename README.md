@@ -31,6 +31,8 @@ cd docker
 docker-compose up -d
 ```
 
+(Note: If you previously ran the Choreography version of this project, you may need to run docker-compose down -v first to clear Kafka's memory of old message types).
+
 ### 2. Run the Microservices
 You can run the microservices directly from your preferred IDE, or use the provided Maven wrappers. Open three separate terminal windows and run:
 
@@ -63,6 +65,7 @@ This folder contains executable terminal commands to easily trigger tests and ve
 - **`place_order`**: Executes an HTTP POST request to the API to initialize a new saga flow by placing an order.
 - **`check_orders`**: Runs a direct query inside the Postgres Docker container to print all current orders.
 - **`check_products`**: Runs a direct query inside the Postgres Docker container to check the current inventory availability.
+- **`check_payments`**: Runs a direct query inside the Postgres Docker container to print all current payments.
 
 ### `order-service/scripts/sql/`
 Provides useful data seeding scripts:
